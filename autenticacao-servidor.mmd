@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor U as Usuário
+    participant C as Cliente
+    participant S as Servidor
+    participant Rs as Registro de Módulos<br>(Servidor)
+    participant As as Autenticação Simples<br>(Servidor)
+
+    S ->>+ Rs: inicializar()
+    Rs ->>+ As: inicializar()
+    As ->> As: registrarTabelasBancoDeDados()
+    As ->> Rs: registrarRotaAPI("/api/login/", handleLogin)
+    As -->>- Rs: inicialização concluída
+    Rs -->>- S: inicialização concluída
+
+    U ->>+ C: login
+    C ->>+ S: POST "/api/login"
+    S ->>+ As: handleLogin(request)
+    As -->>- S: altera sessão
+    S -->>- C: sessão autenticada
+    C -->>- U: página autenticada

@@ -1,0 +1,22 @@
+sequenceDiagram
+    %% Diagrama exemplificando como as partes modulars do sistema funcionam
+    actor U as Usuário
+    participant C as Cliente
+    participant Rc as Registro de Módulos<br>(Cliente)
+    participant Ac as Autenticação Básica<br>(Cliente)
+
+    C ->>+ Rc: inicializar()
+    Rc ->>+ Ac: inicializar()
+    Ac ->> Rc: registrarTela("/autenticacao", telaLogin)
+    Ac ->> Rc: escutarEvento("listarBotoesDeLogin", adicionarBotao)
+    Ac -->>- Rc: inicialização concluída
+    Rc -->>- C: inicialização concluída
+
+    U ->>+ C: acessa página inicial
+    C ->>+ Rc: dispararEvento("listarBotoesDeLogin", [listaVazia])
+    Rc ->>+ Ac: adicionarBotao([listaVazia])
+    Ac -->>- Rc: void, mas o parâmetro foi modificado
+    Rc -->>- C: void, mas o parâmetro foi modificado
+    C -->>- U: página inicial
+    U ->>+ C: clica no botão de login
+    C -->>- U: telaLogin

@@ -1,0 +1,141 @@
+classDiagram
+namespace Core {
+        class Usuario {
+	        +String nome
+	        +String email
+                +Blob
+        }
+
+        class Aluno {
+        }
+
+        class Notificacao {
+                +String titulo
+                +String texto
+                +boolean lida
+                +String link
+        }
+
+        class Atividade {
+	        +Time inicio
+	        +Time fim
+	        +Weekday diaDaSemana
+	        +String descricao
+        }
+
+        class Professor {
+	        +RichText biografia
+	        +List~RichText~ sugestoesDePesquisa
+        }
+
+        class PropostaDeProjeto {
+                +String descricao
+                Projeto aceitar()
+                void rejeitar(String motivo)
+        }
+
+        class Projeto {
+	        +String titulo
+	        +String tituloIngles
+                +RichText resumo
+                +RichText resumoIngles
+                +List~String~ palavrasChave
+                +List~String~ palavrasChaveIngles
+	        +RichText texto
+        }
+
+        class Arquivo {
+	        +String nome
+	        +Blob conteudo
+        }
+
+        class Fonte {
+	        +String titulo
+                +Url link
+                +String[] autores
+	        +Date publicacao
+                +String bibtex
+        }
+}
+
+namespace Server {
+        class Servidor {
+                -Map~Cookie, Session~ sessoes
+	        +inicializar() void
+	        +servir() void
+        }
+
+        class ServerModule["Modulo"] {
+	        +int versao
+	        +String nome
+	        +inicializar(RegistroDeModulos) void
+        }
+
+        class ServerModuleRegistry["RegistroDeModulos"] {
+	        +registrarRotaAPI(String url, Callable callback) void
+	        +registrarMetodo(String nome, Callable callback) void
+	        +invocarMetodo(String nome, Object[] argumentos) Object
+        }
+
+        class AutenticacaoBasica {
+	        +login(String usuario, String senha) Usuario
+        }
+
+        class ExportacaoBasica {
+	        +exportarPDF(Projeto) Blob
+        }
+}
+
+namespace Client {
+        class Cliente {
+                +Usuario sessao
+	        +inicializar() void
+	        +servir() void
+        }
+
+        class ClientModuleRegistry["RegistroDeModulos"] {
+	        +registrarTela(String nome, Screen page) void
+	        +escutarEvento(String nome, Callable callback) void
+	        +dispararEvento(String nome, Object[] argumentos) void
+        }
+
+        class ClientModule["Modulo"] {
+	        +int versao
+	        +String nome
+	        +inicializar(RegistroDeModulos) void
+        }
+
+        class AutenticacaoBasicaClient["AutenticacaoBasica"] {
+	        +paginaDeLogin() Screen
+        }
+
+        class ExportacaoBasicaClient["ExportacaoBasica"] {
+
+        }
+}
+
+%% Core
+<<Abstract>> Usuario
+Aluno --|> Usuario
+Usuario "0..1" --> "*" Atividade : não está disponível em
+Usuario "1" --> "*" Notificacao
+Professor --|> Usuario
+PropostaDeProjeto "0..*" --> "1" Aluno : autor
+PropostaDeProjeto "0..*" --> "1" Professor : orientador
+Projeto "*" --> "1..*" Aluno : autores
+Projeto "*" --> "1..*" Professor : orientadores
+Projeto "0..*" --> "*" Atividade : reunioes
+Projeto "1" ..> "*" Fonte
+Projeto "1" ..> "*" Arquivo
+%% Server
+<<Abstract>> ServerModule
+AutenticacaoBasica --|> ServerModule
+ExportacaoBasica --|> ServerModule
+ServerModuleRegistry "1" <.. "*" ServerModule
+Servidor ..> ServerModuleRegistry
+%% Client
+<<Abstract>> ClientModule
+AutenticacaoBasicaClient --|> ClientModule
+ExportacaoBasicaClient --|> ClientModule
+ClientModuleRegistry "1" <.. "*" ClientModule
+Cliente ..> ClientModuleRegistry
