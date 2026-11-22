@@ -1,0 +1,16 @@
+{
+  "name": "@tcc/shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./render": {
+      "types": "./src/render.ts",
+      "default": "./dist/render.js"
+    }
+  }
+}

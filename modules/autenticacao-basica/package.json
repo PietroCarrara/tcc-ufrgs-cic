@@ -1,0 +1,6 @@
+{
+  "name": "@tcc/autenticacao-basica",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module"
+}

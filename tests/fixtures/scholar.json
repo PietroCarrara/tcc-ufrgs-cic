@@ -1,0 +1,15 @@
+{
+  "organic_results": [
+    {
+      "title": "Pesquisa e colaboração",
+      "result_id": "abc123",
+      "link": "https://example.org/artigo",
+      "publication_info": {
+        "summary": "A Silva - Revista de Pesquisa, 2024",
+        "authors": [{ "name": "Ana Silva" }]
+      }
+    },
+    { "title": "Trabalho com metadados parciais", "result_id": "partial" }
+  ],
+  "serpapi_pagination": { "next": "https://serpapi.com/search.json?start=10" }
+}

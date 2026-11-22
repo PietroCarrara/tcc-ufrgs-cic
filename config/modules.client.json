@@ -1,0 +1,18 @@
+{
+  "packages": [
+    {
+      "entry": "./modules/autenticacao-basica/client.ts",
+      "id": "autenticacao-basica"
+    },
+    {
+      "entry": "./modules/busca-scholar/client.ts",
+      "id": "busca-scholar"
+    },
+    {
+      "entry": "./modules/exportacao-basica/client.ts",
+      "id": "exportacao-basica"
+    }
+  ],
+  "enabled": ["autenticacao-basica", "busca-scholar", "exportacao-basica"],
+  "options": {}
+}

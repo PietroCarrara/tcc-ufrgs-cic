@@ -69,7 +69,18 @@ export class RegistroDeModulos implements RegistroCliente {
     mods: ModuloCliente[],
     options: Record<string, Record<string, unknown>>,
   ) {
+    const active = new Set<string>();
     for (const m of ordenarModulos(mods)) {
+      if (
+        Object.keys(m.manifesto.dependencias ?? {}).some(
+          (id) => !active.has(id),
+        )
+      ) {
+        this.diagnosticos.push(
+          `${m.manifesto.nome}: recurso oculto por dependência indisponível.`,
+        );
+        continue;
+      }
       const server = this.capabilities.find((c) => c.id === m.manifesto.id);
       if (
         m.manifesto.capacidades.length &&
@@ -84,6 +95,7 @@ export class RegistroDeModulos implements RegistroCliente {
       }
       this.owner = m.manifesto.id;
       m.inicializar(this, options[this.owner]);
+      active.add(this.owner);
     }
     this.owner = "core";
   }
