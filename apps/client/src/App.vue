@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, onUnmounted, ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { isNavigationFailure, NavigationFailureType, useRouter } from "vue-router";
 import { usuario, enviar, restaurar } from "./core/http.js";
 import { useApp } from "./core/state.js";
 import { navigation } from "./core/navigation.js";
@@ -40,7 +40,7 @@ async function logout() {
     const uid = usuario.value!.id;
     if (navigation.beforeLogout && !(await navigation.beforeLogout())) return;
     const result = await router.push("/");
-    if (result) return;
+    if (result && !isNavigationFailure(result, NavigationFailureType.duplicated)) return; // Fix logout
     await enviar("/api/logout");
     await limparUsuario(uid);
     usuario.value = null;
