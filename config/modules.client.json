@@ -11,8 +11,12 @@
     {
       "entry": "./modules/exportacao-basica/client.ts",
       "id": "exportacao-basica"
+    },
+    {
+      "entry": "./modules/exportacao-cic/client.ts",
+      "id": "exportacao-cic"
     }
   ],
-  "enabled": ["autenticacao-basica", "busca-scholar", "exportacao-basica"],
+  "enabled": ["autenticacao-basica", "busca-scholar", "exportacao-basica", "exportacao-cic"],
   "options": {}
 }

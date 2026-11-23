@@ -1,0 +1,29 @@
+\documentclass[cic,tc]{infufrgs}
+\usepackage{alphabeta}
+\usepackage[normalem]{ulem}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{tabularray}
+\usepackage{tblr-extras}
+\UseTblrLibrary{caption,babel}
+\usepackage{xurl}
+\usepackage[acronym,nomain,nonumberlist]{glossaries}
+\setacronymstyle{long-short}
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+\makeatletter
+\def\UTFviii@undefined@err#1{\textnormal{[?]}}
+\makeatother
+
+% Os destinos chegam em hexadecimal para preservar caracteres especiais do TeX.
+\DeclareRobustCommand{\TramaHref}[1]{\expandafter\href\expandafter{\pdfunescapehex{#1}}}
+\DeclareRobustCommand{\TramaUrl}[1]{%
+  \TramaHref{#1}{\expandafter\nolinkurl\expandafter{\pdfunescapehex{#1}}}%
+}
+
+\input{predocument.tex}
+
+\begin{document}
+\input{projeto.tex}
+\end{document}

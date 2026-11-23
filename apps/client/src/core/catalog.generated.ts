@@ -1,8 +1,10 @@
 import m0 from "../../../../modules/autenticacao-basica/client.js";
 import m1 from "../../../../modules/busca-scholar/client.js";
 import m2 from "../../../../modules/exportacao-basica/client.js";
+import m3 from "../../../../modules/exportacao-cic/client.js";
 if(m0.manifesto.id!=="autenticacao-basica")throw new Error("ID de módulo incompatível com configuração: autenticacao-basica");
 if(m1.manifesto.id!=="busca-scholar")throw new Error("ID de módulo incompatível com configuração: busca-scholar");
 if(m2.manifesto.id!=="exportacao-basica")throw new Error("ID de módulo incompatível com configuração: exportacao-basica");
-export const catalog=[m0,m1,m2];
+if(m3.manifesto.id!=="exportacao-cic")throw new Error("ID de módulo incompatível com configuração: exportacao-cic");
+export const catalog=[m0,m1,m2,m3];
 export const options={};
