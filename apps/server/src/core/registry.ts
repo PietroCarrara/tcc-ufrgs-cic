@@ -9,7 +9,7 @@ import {
   ordenarModulos,
 } from "../../../../packages/shared/src/index.js";
 import { readFileSync, existsSync, realpathSync } from "node:fs";
-import { resolve, relative, isAbsolute } from "node:path";
+import path, { resolve, relative, isAbsolute } from "node:path";
 import { pathToFileURL } from "node:url";
 import { z } from "zod";
 export const modulesConfigSchema = z.object({
@@ -48,13 +48,13 @@ export function modulePath(entry: string, compiled = false) {
     exigir(
       !local.startsWith("..") &&
         !isAbsolute(local) &&
-        /^(modules|tests\/fixtures)\//.test(local),
+        (local.startsWith("modules") || local.startsWith(`tests${path.sep}fixtures${path.sep}`)),
       500,
       "CAMINHO_MODULO",
-      "Caminho local de módulo não permitido",
+      `Caminho local de módulo não permitido`,
     );
     exigir(
-      existsSync(p) && realpathSync(p).startsWith(realpathSync(root) + "/"),
+      existsSync(p) && realpathSync(p).startsWith(realpathSync(root) + path.sep),
       500,
       "PACOTE_AUSENTE",
       `Entrada não encontrada: ${p}`,

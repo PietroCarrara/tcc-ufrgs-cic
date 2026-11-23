@@ -13,7 +13,7 @@
     "npm": "11.x"
   },
   "scripts": {
-    "dev": "npm run modules:catalog && concurrently -k 'tsx watch --env-file-if-exists=.env apps/server/src/main.ts' 'vite --config apps/client/vite.config.ts'",
+    "dev": "npm run modules:catalog && concurrently -k \"tsx watch --env-file-if-exists=.env apps/server/src/main.ts\" \"vite --config apps/client/vite.config.ts\"",
     "modules:catalog": "tsx scripts/catalog.ts",
     "modules:check": "tsx scripts/check-modules.ts",
     "typecheck": "npm run modules:catalog && tsc --noEmit && vue-tsc --noEmit -p apps/client/tsconfig.json",
